@@ -23,7 +23,7 @@
     margin-bottom: 8px;
   }
   .brand img {
-    height: 56px;
+    height: 64px;
     opacity: 0.9;
   }
   .brand-tag {
@@ -53,10 +53,14 @@
     padding-top: 48px;
     text-align: center;
   }
-  .footer img {
-    height: 40px;
-    margin-bottom: 8px;
-    opacity: 0.7;
+  .footer-logo {
+    display: inline-block;
+    transition: opacity 0.2s;
+  }
+  .footer-logo:hover { opacity: 0.8; }
+  .footer-logo img {
+    height: 52px;
+    margin-bottom: 6px;
   }
   .footer p {
     font-size: 11px;
@@ -236,9 +240,9 @@
 <body>
 
 <div class="brand">
-  <img src="assets/matanga-logo.png" alt="MATANGA">
+  <img src="assets/heritage-valley-logo.svg" alt="Heritage Valley Foods">
 </div>
-<div class="brand-tag">Intelligence Layer</div>
+<div class="brand-tag">Quality Management System</div>
 
 <div class="header">
   <span class="demo-badge">Live Demo</span>
@@ -274,6 +278,9 @@
 </div>
 
 <div class="footer">
+  <a href="https://matangaresearch.com" class="footer-logo" title="MATANGA Research">
+    <img src="assets/m1nt-logo.png" alt="m1NT by MATANGA">
+  </a>
   <p>powered by <strong>MATANGA</strong></p>
   <p style="margin-top: 8px; color: #555;">
     <a href="https://matangaresearch.com">matangaresearch.com</a>

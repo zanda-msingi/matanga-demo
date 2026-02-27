@@ -1,0 +1,67 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 360 80" width="360" height="80">
+  <defs>
+    <linearGradient id="wheat-gold" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#C8A44E"/>
+      <stop offset="100%" stop-color="#A07830"/>
+    </linearGradient>
+    <linearGradient id="red-stripe" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#B22234"/>
+      <stop offset="100%" stop-color="#CC2E3D"/>
+    </linearGradient>
+    <linearGradient id="blue-accent" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#3C5A99"/>
+      <stop offset="100%" stop-color="#2B4170"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Shield shape -->
+  <path d="M12,8 L52,8 C54,8 56,10 56,12 L56,52 C56,58 52,64 40,72 L32,76 L24,72 C12,64 8,58 8,52 L8,12 C8,10 10,8 12,8 Z" fill="url(#blue-accent)" stroke="#FFFFFF" stroke-width="1.5" opacity="0.95"/>
+
+  <!-- Inner shield highlight -->
+  <path d="M14,12 L50,12 C51,12 52,13 52,14 L52,50 C52,55 49,60 39,67 L32,72 L25,67 C15,60 12,55 12,50 L12,14 C12,13 13,12 14,12 Z" fill="none" stroke="rgba(255,255,255,0.15)" stroke-width="0.75"/>
+
+  <!-- Red horizontal stripes inside shield -->
+  <rect x="14" y="14" width="36" height="3" rx="0.5" fill="url(#red-stripe)" opacity="0.85"/>
+  <rect x="14" y="20" width="36" height="3" rx="0.5" fill="url(#red-stripe)" opacity="0.85"/>
+
+  <!-- White star -->
+  <polygon points="32,28 34.4,33.8 40.8,34.2 35.8,38.2 37.4,44.4 32,41 26.6,44.4 28.2,38.2 23.2,34.2 29.6,33.8" fill="#FFFFFF" opacity="0.95"/>
+
+  <!-- Wheat stalks - left -->
+  <g transform="translate(18, 48) rotate(-20)" opacity="0.9">
+    <line x1="0" y1="0" x2="0" y2="18" stroke="url(#wheat-gold)" stroke-width="1.2" stroke-linecap="round"/>
+    <ellipse cx="-2.5" cy="2" rx="2" ry="4" fill="url(#wheat-gold)" transform="rotate(-15)"/>
+    <ellipse cx="-2" cy="7" rx="1.8" ry="3.5" fill="url(#wheat-gold)" transform="rotate(-10)"/>
+    <ellipse cx="-1.5" cy="12" rx="1.6" ry="3" fill="url(#wheat-gold)" transform="rotate(-5)"/>
+    <ellipse cx="2.5" cy="4" rx="2" ry="4" fill="url(#wheat-gold)" transform="rotate(15)"/>
+    <ellipse cx="2" cy="9" rx="1.8" ry="3.5" fill="url(#wheat-gold)" transform="rotate(10)"/>
+  </g>
+
+  <!-- Wheat stalks - right -->
+  <g transform="translate(46, 48) rotate(20)" opacity="0.9">
+    <line x1="0" y1="0" x2="0" y2="18" stroke="url(#wheat-gold)" stroke-width="1.2" stroke-linecap="round"/>
+    <ellipse cx="2.5" cy="2" rx="2" ry="4" fill="url(#wheat-gold)" transform="rotate(15)"/>
+    <ellipse cx="2" cy="7" rx="1.8" ry="3.5" fill="url(#wheat-gold)" transform="rotate(10)"/>
+    <ellipse cx="1.5" cy="12" rx="1.6" ry="3" fill="url(#wheat-gold)" transform="rotate(5)"/>
+    <ellipse cx="-2.5" cy="4" rx="2" ry="4" fill="url(#wheat-gold)" transform="rotate(-15)"/>
+    <ellipse cx="-2" cy="9" rx="1.8" ry="3.5" fill="url(#wheat-gold)" transform="rotate(-10)"/>
+  </g>
+
+  <!-- Company name -->
+  <text x="72" y="34" font-family="Georgia, 'Times New Roman', serif" font-size="22" font-weight="bold" fill="#FFFFFF" letter-spacing="0.5">
+    Heritage Valley
+  </text>
+
+  <!-- "Foods" text -->
+  <text x="72" y="56" font-family="Georgia, 'Times New Roman', serif" font-size="22" font-weight="bold" fill="#FFFFFF" letter-spacing="0.5">
+    Foods
+  </text>
+
+  <!-- Tagline divider line -->
+  <line x1="72" y1="62" x2="230" y2="62" stroke="url(#red-stripe)" stroke-width="1.5" opacity="0.7"/>
+
+  <!-- Tagline -->
+  <text x="72" y="74" font-family="'Helvetica Neue', Arial, sans-serif" font-size="9.5" fill="#C8A44E" letter-spacing="2.5" text-transform="uppercase">
+    ARTISAN BAKED GOODS
+  </text>
+</svg>
