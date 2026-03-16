@@ -8,113 +8,85 @@
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
   * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body { height: 100%; }
   body {
     font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
     background: #122023;
     color: #e0e0e0;
-    min-height: 100vh;
     display: flex;
     flex-direction: column;
-    align-items: center;
-    padding: 40px 20px;
+    height: 100vh;
   }
-  .brand {
-    text-align: center;
-    margin-bottom: 8px;
-  }
-  .brand img {
-    height: 56px;
-    opacity: 0.9;
-  }
-  .brand-tag {
-    font-size: 11px;
-    color: #dffba8;
-    letter-spacing: 1.5px;
-    text-transform: uppercase;
-    margin-bottom: 28px;
-    text-align: center;
-  }
+
+  /* Header */
   .header {
     text-align: center;
-    margin-bottom: 40px;
+    padding: 20px 20px 16px;
+    border-bottom: 1px solid #1a2c30;
+    flex-shrink: 0;
   }
-  .header h1 {
-    font-size: 28px;
-    font-weight: 600;
-    color: #ffffff;
+  .header-top {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
     margin-bottom: 6px;
   }
+  .header-top img { height: 36px; }
+  .header h1 {
+    font-size: 22px;
+    font-weight: 600;
+    color: #ffffff;
+  }
   .header p {
-    font-size: 14px;
+    font-size: 13px;
     color: #888;
+    margin-top: 4px;
   }
-  .footer {
-    margin-top: auto;
-    padding-top: 48px;
-    text-align: center;
+  .header-links {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+    margin-top: 10px;
   }
-  .footer img {
-    height: 40px;
-    margin-bottom: 8px;
-    opacity: 0.7;
-  }
-  .footer p {
+  .header-links a {
+    padding: 4px 12px;
     font-size: 11px;
     color: #dffba8;
-    letter-spacing: 0.5px;
-  }
-  .footer a {
-    color: #dffba8;
+    border: 1px solid rgba(223,251,168,0.25);
+    border-radius: 4px;
     text-decoration: none;
-    border-bottom: 1px solid rgba(223, 251, 168, 0.3);
+    letter-spacing: 0.3px;
+    transition: all 0.2s;
   }
-  .footer a:hover { border-bottom-color: #dffba8; }
-  .container {
-    width: 100%;
-    max-width: 720px;
-  }
-  .input-area {
-    display: flex;
-    gap: 10px;
-    margin-bottom: 24px;
-  }
-  .input-area input {
+  .header-links a:hover { border-color: #dffba8; background: rgba(223,251,168,0.08); }
+
+  /* Chat area */
+  .chat-area {
     flex: 1;
-    padding: 14px 18px;
-    font-size: 15px;
-    font-family: inherit;
-    background: #1a1a1a;
-    border: 1px solid #333;
-    border-radius: 8px;
-    color: #fff;
-    outline: none;
-    transition: border-color 0.2s;
+    overflow-y: auto;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    max-width: 760px;
+    width: 100%;
+    margin: 0 auto;
   }
-  .input-area input:focus { border-color: #dffba8; }
-  .input-area input::placeholder { color: #555; }
-  .input-area button {
-    padding: 14px 28px;
-    font-size: 15px;
-    font-weight: 500;
-    font-family: inherit;
-    background: #dffba8;
-    color: #122023;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-    transition: background 0.2s;
-    white-space: nowrap;
+
+  /* Welcome state */
+  .welcome {
+    text-align: center;
+    padding: 40px 20px;
+    color: #555;
   }
-  .input-area button:hover { background: #c8f078; }
-  .input-area button:disabled {
-    background: #333;
-    cursor: not-allowed;
-  }
+  .welcome h2 { color: #888; font-size: 18px; margin-bottom: 16px; font-weight: 500; }
   .sample-queries {
     display: flex;
     flex-wrap: wrap;
     gap: 8px;
-    margin-bottom: 20px;
+    justify-content: center;
+    margin-top: 16px;
   }
   .sample-queries button {
     padding: 6px 14px;
@@ -127,200 +99,219 @@
     cursor: pointer;
     transition: all 0.2s;
   }
-  .sample-queries button:hover {
-    border-color: #dffba8;
+  .sample-queries button:hover { border-color: #dffba8; color: #dffba8; }
+
+  /* Messages */
+  .msg { max-width: 100%; animation: fadeIn 0.3s ease; }
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+
+  .msg-user {
+    align-self: flex-end;
+    background: #1a3a40;
+    border: 1px solid #2a4a50;
+    border-radius: 12px 12px 4px 12px;
+    padding: 10px 16px;
+    font-size: 14px;
     color: #dffba8;
+    max-width: 80%;
   }
-  .response-card {
+
+  .msg-assistant {
     background: #141414;
     border: 1px solid #222;
-    border-radius: 10px;
-    padding: 28px;
+    border-radius: 4px 12px 12px 12px;
+    padding: 20px 24px;
     line-height: 1.7;
-    font-size: 14.5px;
-    display: none;
-  }
-  .response-card.visible { display: block; }
-  .response-card h2, .response-card h3 {
-    color: #fff;
-    margin-top: 16px;
-    margin-bottom: 8px;
-  }
-  .response-card h2 { font-size: 16px; }
-  .response-card h3 { font-size: 14.5px; }
-  .response-card p { margin-bottom: 10px; }
-  .response-card strong { color: #c4b5fd; }
-  .response-card ul, .response-card ol {
-    margin-left: 20px;
-    margin-bottom: 10px;
-  }
-  .response-card li { margin-bottom: 4px; }
-  .response-card table {
-    width: 100%;
-    border-collapse: collapse;
-    margin: 12px 0;
-    font-size: 13.5px;
-  }
-  .response-card th, .response-card td {
-    text-align: left;
-    padding: 8px 12px;
-    border-bottom: 1px solid #222;
-  }
-  .response-card th { color: #a5a5a5; font-weight: 500; }
-  .response-card hr {
-    border: none;
-    border-top: 1px solid #222;
-    margin: 16px 0;
-  }
-  .meta {
-    margin-top: 20px;
-    padding-top: 14px;
-    border-top: 1px solid #222;
-    font-size: 12px;
-    color: #555;
-    display: flex;
-    justify-content: space-between;
-  }
-  .spinner {
-    display: none;
-    text-align: center;
-    padding: 40px;
-    color: #888;
     font-size: 14px;
   }
-  .spinner.visible { display: block; }
-  .spinner::before {
-    content: '';
-    display: inline-block;
-    width: 20px;
-    height: 20px;
-    border: 2px solid #333;
-    border-top-color: #dffba8;
-    border-radius: 50%;
-    animation: spin 0.8s linear infinite;
-    margin-right: 10px;
-    vertical-align: middle;
-  }
-  @keyframes spin { to { transform: rotate(360deg); } }
-  .error {
-    background: #1a0a0a;
-    border-color: #3a1515;
-    color: #f87171;
-  }
-  .disclaimer {
-    font-size: 11px;
-    color: #dffba8;
-    text-align: center;
-    margin: -14px 0 20px;
-  }
-  .query-echo {
+  .msg-assistant h2, .msg-assistant h3 { color: #fff; margin-top: 14px; margin-bottom: 6px; }
+  .msg-assistant h2 { font-size: 15px; }
+  .msg-assistant h3 { font-size: 14px; }
+  .msg-assistant p { margin-bottom: 8px; }
+  .msg-assistant strong { color: #c4b5fd; }
+  .msg-assistant a { color: #c4b5fd; text-decoration: underline; text-underline-offset: 3px; }
+  .msg-assistant a:hover { color: #ddd0fe; }
+  .msg-assistant ul, .msg-assistant ol { margin-left: 20px; margin-bottom: 8px; }
+  .msg-assistant li { margin-bottom: 3px; }
+  .msg-assistant table { width: 100%; border-collapse: collapse; margin: 10px 0; font-size: 13px; }
+  .msg-assistant th, .msg-assistant td { text-align: left; padding: 6px 10px; border-bottom: 1px solid #222; }
+  .msg-assistant th { color: #a5a5a5; font-weight: 500; }
+  .msg-assistant hr { border: none; border-top: 1px solid #222; margin: 12px 0; }
+  .msg-meta { margin-top: 12px; padding-top: 10px; border-top: 1px solid #222; font-size: 11px; color: #555; display: flex; justify-content: space-between; }
+
+  .msg-error { background: #1a0a0a; border-color: #3a1515; }
+  .msg-error p { color: #f87171; }
+
+  /* Thinking indicator */
+  .thinking {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 16px;
+    color: #888;
     font-size: 13px;
-    color: #666;
-    margin-bottom: 16px;
-    font-style: italic;
   }
-  .demo-badge {
+  .thinking-dots span {
     display: inline-block;
-    padding: 4px 12px;
-    font-size: 10px;
-    font-weight: 600;
-    letter-spacing: 1px;
-    text-transform: uppercase;
+    width: 6px; height: 6px;
+    background: #dffba8;
+    border-radius: 50%;
+    animation: pulse 1.2s ease-in-out infinite;
+  }
+  .thinking-dots span:nth-child(2) { animation-delay: 0.2s; }
+  .thinking-dots span:nth-child(3) { animation-delay: 0.4s; }
+  @keyframes pulse { 0%, 100% { opacity: 0.2; } 50% { opacity: 1; } }
+
+  /* Input bar - fixed at bottom */
+  .input-bar {
+    flex-shrink: 0;
+    border-top: 1px solid #1a2c30;
+    padding: 12px 20px;
+    background: #0e1a1c;
+  }
+  .input-bar-inner {
+    max-width: 760px;
+    margin: 0 auto;
+    display: flex;
+    gap: 8px;
+  }
+  .input-bar input {
+    flex: 1;
+    padding: 12px 16px;
+    font-size: 14px;
+    font-family: inherit;
+    background: #1a1a1a;
+    border: 1px solid #333;
+    border-radius: 8px;
+    color: #fff;
+    outline: none;
+    transition: border-color 0.2s;
+  }
+  .input-bar input:focus { border-color: #dffba8; }
+  .input-bar input::placeholder { color: #555; }
+  .input-bar button {
+    padding: 12px 24px;
+    font-size: 14px;
+    font-weight: 500;
+    font-family: inherit;
+    background: #dffba8;
     color: #122023;
-    background: #ffdb00;
-    border-radius: 4px;
-    margin-bottom: 24px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background 0.2s;
+    white-space: nowrap;
+  }
+  .input-bar button:hover { background: #c8f078; }
+  .input-bar button:disabled { background: #333; cursor: not-allowed; }
+  .disclaimer {
+    font-size: 10px;
+    color: #555;
+    text-align: center;
+    margin-top: 6px;
+    max-width: 760px;
+    margin-left: auto;
+    margin-right: auto;
   }
 </style>
 </head>
 <body>
 
-<div class="brand" style="display: flex; justify-content: center;">
-  <img src="assets/heritage-valley-logo.svg" alt="Heritage Valley Foods" style="height: 80px;">
-</div>
-<div class="brand-tag">Quality Management System</div>
-
 <div class="header">
-  <span class="demo-badge">Live Demo</span>
-  <h1>Ask Your Binder</h1>
-  <p>m1NT - AI compliance agent for your quality management system</p>
-  <a href="https://matangaresearchllc.sharepoint.com/sites/heritage-valley-smart-binder" target="_blank" style="display: inline-block; margin-top: 12px; padding: 6px 16px; font-size: 12px; color: #dffba8; border: 1px solid rgba(223,251,168,0.3); border-radius: 6px; text-decoration: none; letter-spacing: 0.5px; transition: all 0.2s;">Open SharePoint Binder</a>
+  <div class="header-top">
+    <img src="assets/heritage-valley-logo.svg" alt="HVF" style="height: 36px; clip-path: inset(0 22% 30% 0); transform: scale(1.5); margin-right: 4px;">
+    <h1>Ask Your Binder</h1>
+  </div>
+  <p>m1NT - AI compliance agent for Heritage Valley Foods</p>
+  <div class="header-links">
+    <a href="https://matangaresearchllc.sharepoint.com/sites/heritage-valley-smart-binder" target="_blank">Open SharePoint Binder</a>
+    <a href="https://matangaresearch.com" target="_blank">matangaresearch.com</a>
+  </div>
 </div>
 
-<div class="container">
-  <div class="input-area">
-    <input type="text" id="query" placeholder="Ask about quality records, compliance status, audit readiness..." autofocus>
-    <button id="clearBtn" onclick="clearInput()" style="padding: 14px 14px; background: transparent; color: #555; border: 1px solid #333; border-radius: 8px; cursor: pointer; font-size: 15px; display: none;" title="Clear">&times;</button>
-    <button id="submit" onclick="askBinder()">Ask</button>
-  </div>
-
-  <div class="sample-queries">
-    <button onclick="tryQuery(this)">What shipping records exist for Lot 2847?</button>
-    <button onclick="tryQuery(this)">Show me open CAPAs</button>
-    <button onclick="tryQuery(this)">Is our allergen program up to date?</button>
-    <button onclick="tryQuery(this)">Metal detector calibration SOP</button>
-  </div>
-
-  <p class="disclaimer">Demo environment with sample data. AI-generated responses may contain errors. Always verify against source documents.</p>
-
-  <div class="spinner" id="spinner">Searching your binder...</div>
-
-  <div class="response-card" id="response">
-    <div class="query-echo" id="queryEcho"></div>
-    <div id="responseBody"></div>
-    <div class="meta">
-      <span id="metaModel"></span>
-      <span id="metaTime"></span>
+<div class="chat-area" id="chatArea">
+  <div class="welcome" id="welcome">
+    <img src="assets/m1nt-logo.png" alt="m1NT" style="height: 48px; opacity: 0.5; margin-bottom: 12px;">
+    <h2>What would you like to know about your binder?</h2>
+    <div class="sample-queries">
+      <button onclick="tryQuery(this)">Trace lot 2831 from production to shipping</button>
+      <button onclick="tryQuery(this)">Show me open CAPAs</button>
+      <button onclick="tryQuery(this)">Is our allergen program up to date?</button>
+      <button onclick="tryQuery(this)">What happened with the Coastal mold complaint?</button>
+      <button onclick="tryQuery(this)">What docs do I need for a BRCGS audit?</button>
     </div>
   </div>
 </div>
 
-<div class="footer">
-  <img src="assets/m1nt-logo.png" alt="m1NT">
-  <p>powered by <strong>MATANGA</strong></p>
-  <p style="margin-top: 8px; color: #555;">
-    <a href="https://matangaresearch.com">matangaresearch.com</a>
-  </p>
+<div class="input-bar">
+  <div class="input-bar-inner">
+    <input type="text" id="query" placeholder="Ask about quality records, compliance, audit readiness..." autofocus>
+    <button id="submit" onclick="askBinder()">Ask</button>
+  </div>
+  <p class="disclaimer">Demo environment with sample data. AI-generated responses may contain errors. Always verify against source documents.</p>
 </div>
 
 <script>
 const WEBHOOK_URL = 'https://zandap.app.n8n.cloud/webhook/ask-your-binder-demo';
-
+const chatArea = document.getElementById('chatArea');
 const queryInput = document.getElementById('query');
-const clearBtn = document.getElementById('clearBtn');
+const welcome = document.getElementById('welcome');
 
 queryInput.addEventListener('keydown', (e) => {
   if (e.key === 'Enter') askBinder();
 });
-queryInput.addEventListener('input', () => {
-  clearBtn.style.display = queryInput.value.length > 0 ? 'block' : 'none';
-});
-
-function clearInput() {
-  queryInput.value = '';
-  clearBtn.style.display = 'none';
-  queryInput.focus();
-}
 
 function tryQuery(btn) {
   queryInput.value = btn.textContent;
   askBinder();
 }
 
+function scrollToBottom() {
+  chatArea.scrollTop = chatArea.scrollHeight;
+}
+
+function addUserMessage(text) {
+  if (welcome) welcome.remove();
+  const div = document.createElement('div');
+  div.className = 'msg msg-user';
+  div.textContent = text;
+  chatArea.appendChild(div);
+  scrollToBottom();
+}
+
+function addThinking() {
+  const div = document.createElement('div');
+  div.className = 'thinking';
+  div.id = 'thinking';
+  div.innerHTML = '<div class="thinking-dots"><span></span><span></span><span></span></div> Searching your binder...';
+  chatArea.appendChild(div);
+  scrollToBottom();
+  return div;
+}
+
+function removeThinking() {
+  const el = document.getElementById('thinking');
+  if (el) el.remove();
+}
+
+function addAssistantMessage(html, model, elapsed, isError) {
+  const div = document.createElement('div');
+  div.className = 'msg msg-assistant' + (isError ? ' msg-error' : '');
+  div.innerHTML = html + '<div class="msg-meta"><span>' + (model || '') + '</span><span>' + (elapsed || '') + '</span></div>';
+  chatArea.appendChild(div);
+  scrollToBottom();
+}
+
 async function askBinder() {
-  const input = document.getElementById('query');
-  const query = input.value.trim();
+  const query = queryInput.value.trim();
   if (!query) return;
 
   const btn = document.getElementById('submit');
-  const spinner = document.getElementById('spinner');
-  const card = document.getElementById('response');
-
+  addUserMessage(query);
+  queryInput.value = '';
   btn.disabled = true;
-  card.classList.remove('visible');
-  card.classList.remove('error');
-  spinner.classList.add('visible');
 
+  const thinkingEl = addThinking();
   const start = Date.now();
 
   try {
@@ -331,51 +322,67 @@ async function askBinder() {
     });
 
     const data = await res.json();
-    const elapsed = ((Date.now() - start) / 1000).toFixed(1);
+    const elapsed = ((Date.now() - start) / 1000).toFixed(1) + 's';
     const item = Array.isArray(data) ? data[0] : data;
 
-    document.getElementById('queryEcho').textContent = '\u201c' + query + '\u201d';
-    document.getElementById('responseBody').innerHTML = markdownToHtml(item.response || 'No response received.');
-    document.getElementById('metaModel').textContent = item.model || '';
-    document.getElementById('metaTime').textContent = elapsed + 's';
-
-    if (item.error) card.classList.add('error');
-    card.classList.add('visible');
+    removeThinking();
+    addAssistantMessage(
+      markdownToHtml(item.response || 'No response received.'),
+      item.model || '',
+      elapsed,
+      item.error
+    );
   } catch (err) {
-    document.getElementById('queryEcho').textContent = '\u201c' + query + '\u201d';
-    document.getElementById('responseBody').innerHTML = '<p>Connection error: ' + err.message + '</p>';
-    document.getElementById('metaModel').textContent = '';
-    document.getElementById('metaTime').textContent = '';
-    card.classList.add('error', 'visible');
+    removeThinking();
+    addAssistantMessage('<p>Connection error: ' + err.message + '</p>', '', '', true);
   } finally {
     btn.disabled = false;
-    spinner.classList.remove('visible');
-    input.value = '';
-    clearBtn.style.display = 'none';
-    input.focus();
+    queryInput.focus();
   }
 }
 
 function markdownToHtml(md) {
-  // Extract and protect markdown links before HTML escaping
   const linkMap = {};
   let linkIdx = 0;
   let processed = md.replace(/\[([^\]]+)\]\((https?:\/\/[^)]+)\)/g, (match, text, url) => {
     const key = `__LINK${linkIdx++}__`;
-    linkMap[key] = '<a href="' + url + '" target="_blank" style="color: #c4b5fd; text-decoration: underline; text-underline-offset: 3px;">' + text + '</a>';
+    linkMap[key] = '<a href="' + url + '" target="_blank">' + text + '</a>';
     return key;
   });
 
-  // Also handle bare URLs (https://...)
   processed = processed.replace(/(https?:\/\/[^\s<>)\]]+)/g, (match) => {
-    // Skip if already captured as a link
     if (match.startsWith('__LINK')) return match;
     const key = `__LINK${linkIdx++}__`;
-    // Truncate display for long SharePoint URLs
     const display = match.length > 60 ? match.substring(0, 57) + '...' : match;
-    linkMap[key] = '<a href="' + match + '" target="_blank" style="color: #c4b5fd; text-decoration: underline; text-underline-offset: 3px;">' + display + '</a>';
+    linkMap[key] = '<a href="' + match + '" target="_blank">' + display + '</a>';
     return key;
   });
+
+  // Also auto-link doc filenames to their SharePoint URLs
+  const docLinks = {
+    'PLN-HACCP-Master-Plan-v1.0': 'https://matangaresearchllc.sharepoint.com/sites/heritage-valley-smart-binder/_layouts/15/Doc.aspx?sourcedoc=%7B2052BD99-2321-4694-872B-CCF63DD91706%7D',
+    'DOC-HACCP-Team-List-v1.0': 'https://matangaresearchllc.sharepoint.com/sites/heritage-valley-smart-binder/_layouts/15/Doc.aspx?sourcedoc=%7BE0352F45-400F-4724-8EAD-D85424E5EC1C%7D',
+    'DOC-Product-Description-HVF-v1.0': 'https://matangaresearchllc.sharepoint.com/sites/heritage-valley-smart-binder/_layouts/15/Doc.aspx?sourcedoc=%7BEEB7C34F-F124-4198-BF12-D5B05E50D37E%7D',
+    'DGM-Process-Flow-Bakery-v2.0': 'https://matangaresearchllc.sharepoint.com/sites/heritage-valley-smart-binder/_layouts/15/Doc.aspx?sourcedoc=%7B0C9307E8-4695-4A49-A4CC-A5DC2D41470B%7D',
+    'DGM-Process-Flow-Bakery-v1.0': 'https://matangaresearchllc.sharepoint.com/sites/heritage-valley-smart-binder/_layouts/15/Doc.aspx?sourcedoc=%7B0A972A34-6D29-4209-99F0-FAC24DC8079E%7D',
+    'CHT-CCP-001-Metal-Detection-v1.0': 'https://matangaresearchllc.sharepoint.com/sites/heritage-valley-smart-binder/_layouts/15/Doc.aspx?sourcedoc=%7B1CFC0F1A-9567-4C3B-9C80-6E766BF01584%7D',
+    'CHT-CCP-002-Baking-Temp-v1.0': 'https://matangaresearchllc.sharepoint.com/sites/heritage-valley-smart-binder/_layouts/15/Doc.aspx?sourcedoc=%7B0B360F83-A77F-4A55-B75E-0B0614546A38%7D',
+    'FRM-CCP-Corrective-Action-Log-v1.0': 'https://matangaresearchllc.sharepoint.com/sites/heritage-valley-smart-binder/_layouts/15/Doc.aspx?sourcedoc=%7B8BFB824F-65BF-4A82-BB5E-0BA717D01725%7D',
+    'FRM-Mock-Recall-Exercise-v1.0': 'https://matangaresearchllc.sharepoint.com/sites/heritage-valley-smart-binder/_layouts/15/Doc.aspx?sourcedoc=%7B72E00CD4-E952-48F8-8144-DE9E559108D0%7D',
+    'RPT-CAPA-2026-042-Investigation-v1.0': 'https://matangaresearchllc.sharepoint.com/sites/heritage-valley-smart-binder/_layouts/15/Doc.aspx?sourcedoc=%7B713456DF-3DC4-4ECB-84D5-A985269E7F66%7D',
+    'DOC-Document-Naming-Conventions-v1.0': 'https://matangaresearchllc.sharepoint.com/sites/heritage-valley-smart-binder/_layouts/15/Doc.aspx?sourcedoc=%7B932F9714-E103-4936-9CF9-201DEC679600%7D',
+  };
+  for (const [docName, url] of Object.entries(docLinks)) {
+    // Match both .docx and plain references
+    const patterns = [docName + '.docx', docName + '.xlsx', docName];
+    for (const pat of patterns) {
+      if (processed.includes(pat) && !processed.includes('__LINK' + pat)) {
+        const key = `__LINK${linkIdx++}__`;
+        linkMap[key] = '<a href="' + url + '" target="_blank">' + pat + '</a>';
+        processed = processed.split(pat).join(key);
+      }
+    }
+  }
 
   let html = processed
     .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
@@ -402,7 +409,6 @@ function markdownToHtml(md) {
   html = html.replace(/<br><\/ul>/g, '</ul>');
   html = html.replace(/<ul><br>/g, '<ul>');
 
-  // Restore protected links
   for (const [key, link] of Object.entries(linkMap)) {
     html = html.split(key).join(link);
   }
