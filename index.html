@@ -4,7 +4,6 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Ask Your Binder - m1NT Demo</title>
-<link rel="icon" type="image/png" href="assets/favicon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
@@ -24,7 +23,7 @@
     margin-bottom: 8px;
   }
   .brand img {
-    height: 64px;
+    height: 56px;
     opacity: 0.9;
   }
   .brand-tag {
@@ -54,14 +53,10 @@
     padding-top: 48px;
     text-align: center;
   }
-  .footer-logo {
-    display: inline-block;
-    transition: opacity 0.2s;
-  }
-  .footer-logo:hover { opacity: 0.8; }
-  .footer-logo img {
-    height: 52px;
-    margin-bottom: 6px;
+  .footer img {
+    height: 40px;
+    margin-bottom: 8px;
+    opacity: 0.7;
   }
   .footer p {
     font-size: 11px;
@@ -240,8 +235,8 @@
 </head>
 <body>
 
-<div class="brand">
-  <img src="assets/heritage-valley-logo.svg" alt="Heritage Valley Foods">
+<div class="brand" style="display: flex; justify-content: center;">
+  <img src="assets/heritage-valley-logo.svg" alt="Heritage Valley Foods" style="height: 80px;">
 </div>
 <div class="brand-tag">Quality Management System</div>
 
@@ -249,11 +244,13 @@
   <span class="demo-badge">Live Demo</span>
   <h1>Ask Your Binder</h1>
   <p>m1NT - AI compliance agent for your quality management system</p>
+  <a href="https://matangaresearchllc.sharepoint.com/sites/heritage-valley-smart-binder" target="_blank" style="display: inline-block; margin-top: 12px; padding: 6px 16px; font-size: 12px; color: #dffba8; border: 1px solid rgba(223,251,168,0.3); border-radius: 6px; text-decoration: none; letter-spacing: 0.5px; transition: all 0.2s;">Open SharePoint Binder</a>
 </div>
 
 <div class="container">
   <div class="input-area">
     <input type="text" id="query" placeholder="Ask about quality records, compliance status, audit readiness..." autofocus>
+    <button id="clearBtn" onclick="clearInput()" style="padding: 14px 14px; background: transparent; color: #555; border: 1px solid #333; border-radius: 8px; cursor: pointer; font-size: 15px; display: none;" title="Clear">&times;</button>
     <button id="submit" onclick="askBinder()">Ask</button>
   </div>
 
@@ -279,9 +276,6 @@
 </div>
 
 <div class="footer">
-  <a href="https://matangaresearch.com" class="footer-logo" title="MATANGA Research">
-    <img src="assets/m1nt-logo.png" alt="m1NT by MATANGA">
-  </a>
   <p>powered by <strong>MATANGA</strong></p>
   <p style="margin-top: 8px; color: #555;">
     <a href="https://matangaresearch.com">matangaresearch.com</a>
@@ -291,12 +285,24 @@
 <script>
 const WEBHOOK_URL = 'https://zandap.app.n8n.cloud/webhook/ask-your-binder-demo';
 
-document.getElementById('query').addEventListener('keydown', (e) => {
+const queryInput = document.getElementById('query');
+const clearBtn = document.getElementById('clearBtn');
+
+queryInput.addEventListener('keydown', (e) => {
   if (e.key === 'Enter') askBinder();
 });
+queryInput.addEventListener('input', () => {
+  clearBtn.style.display = queryInput.value.length > 0 ? 'block' : 'none';
+});
+
+function clearInput() {
+  queryInput.value = '';
+  clearBtn.style.display = 'none';
+  queryInput.focus();
+}
 
 function tryQuery(btn) {
-  document.getElementById('query').value = btn.textContent;
+  queryInput.value = btn.textContent;
   askBinder();
 }
 
@@ -343,12 +349,34 @@ async function askBinder() {
   } finally {
     btn.disabled = false;
     spinner.classList.remove('visible');
-    input.select();
+    input.value = '';
+    clearBtn.style.display = 'none';
+    input.focus();
   }
 }
 
 function markdownToHtml(md) {
-  let html = md
+  // Extract and protect markdown links before HTML escaping
+  const linkMap = {};
+  let linkIdx = 0;
+  let processed = md.replace(/\[([^\]]+)\]\((https?:\/\/[^)]+)\)/g, (match, text, url) => {
+    const key = `__LINK${linkIdx++}__`;
+    linkMap[key] = '<a href="' + url + '" target="_blank" style="color: #c4b5fd; text-decoration: underline; text-underline-offset: 3px;">' + text + '</a>';
+    return key;
+  });
+
+  // Also handle bare URLs (https://...)
+  processed = processed.replace(/(https?:\/\/[^\s<>)\]]+)/g, (match) => {
+    // Skip if already captured as a link
+    if (match.startsWith('__LINK')) return match;
+    const key = `__LINK${linkIdx++}__`;
+    // Truncate display for long SharePoint URLs
+    const display = match.length > 60 ? match.substring(0, 57) + '...' : match;
+    linkMap[key] = '<a href="' + match + '" target="_blank" style="color: #c4b5fd; text-decoration: underline; text-underline-offset: 3px;">' + display + '</a>';
+    return key;
+  });
+
+  let html = processed
     .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
     .replace(/^\|(.+)\|\s*\n\|[-| :]+\|\s*\n((?:\|.+\|\s*\n?)*)/gm, (match, header, body) => {
       const ths = header.split('|').map(h => h.trim()).filter(Boolean).map(h => '<th>' + h + '</th>').join('');
@@ -360,6 +388,7 @@ function markdownToHtml(md) {
     })
     .replace(/^### (.+)$/gm, '<h3>$1</h3>')
     .replace(/^## (.+)$/gm, '<h2>$1</h2>')
+    .replace(/^# (.+)$/gm, '<h2>$1</h2>')
     .replace(/^---$/gm, '<hr>')
     .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
     .replace(/\*(.+?)\*/g, '<em>$1</em>')
@@ -371,6 +400,11 @@ function markdownToHtml(md) {
   html = html.replace(/((?:<li>.*?<\/li>\s*(?:<br>)?)+)/g, '<ul>$1</ul>');
   html = html.replace(/<br><\/ul>/g, '</ul>');
   html = html.replace(/<ul><br>/g, '<ul>');
+
+  // Restore protected links
+  for (const [key, link] of Object.entries(linkMap)) {
+    html = html.split(key).join(link);
+  }
 
   return '<p>' + html + '</p>';
 }
