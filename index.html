@@ -20,46 +20,48 @@
 
   /* Header */
   .header {
-    text-align: center;
-    padding: 20px 20px 16px;
+    padding: 12px 24px;
     border-bottom: 1px solid #1a2c30;
     flex-shrink: 0;
   }
-  .header-top {
+  .header-row {
     display: flex;
     align-items: center;
-    justify-content: center;
-    gap: 12px;
-    margin-bottom: 6px;
+    justify-content: space-between;
+    max-width: 800px;
+    margin: 0 auto;
   }
-  .header-top img { height: 36px; }
-  .header h1 {
-    font-size: 22px;
-    font-weight: 600;
-    color: #ffffff;
-  }
-  .header p {
-    font-size: 13px;
-    color: #888;
-    margin-top: 4px;
-  }
-  .header-links {
+  .header-left {
     display: flex;
-    gap: 12px;
-    justify-content: center;
-    margin-top: 10px;
-  }
-  .header-links a {
-    padding: 4px 12px;
-    font-size: 11px;
-    color: #dffba8;
-    border: 1px solid rgba(223,251,168,0.25);
-    border-radius: 4px;
+    align-items: center;
+    gap: 10px;
     text-decoration: none;
-    letter-spacing: 0.3px;
-    transition: all 0.2s;
   }
-  .header-links a:hover { border-color: #dffba8; background: rgba(223,251,168,0.08); }
+  .header-left img { height: 30px; }
+  .header-left-text { line-height: 1.2; }
+  .header-left-name { font-size: 15px; font-weight: 700; color: #fff; }
+  .header-left-sub { font-size: 10px; color: #888; }
+  .header-center {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 18px;
+    font-weight: 600;
+    color: #fff;
+    white-space: nowrap;
+  }
+  .header-right {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    text-decoration: none;
+  }
+  .header-right-text { line-height: 1.2; text-align: right; }
+  .header-right-name { font-size: 13px; font-weight: 600; color: #fff; }
+  .header-right-sub { font-size: 10px; color: #888; }
+  .header-right img { height: 36px; }
+  .header-left:hover .header-left-name,
+  .header-right:hover .header-right-name { color: #dffba8; }
 
   /* Chat area */
   .chat-area {
@@ -218,14 +220,22 @@
 <body>
 
 <div class="header">
-  <div class="header-top">
-    <img src="assets/heritage-valley-logo.svg" alt="HVF" style="height: 36px; clip-path: inset(0 22% 30% 0); transform: scale(1.5); margin-right: 4px;">
-    <h1>Ask Your Binder</h1>
-  </div>
-  <p>m1NT - AI compliance agent for Heritage Valley Foods</p>
-  <div class="header-links">
-    <a href="https://matangaresearchllc.sharepoint.com/sites/heritage-valley-smart-binder" target="_blank">Open SharePoint Binder</a>
-    <a href="https://matangaresearch.com" target="_blank">matangaresearch.com</a>
+  <div class="header-row" style="position: relative;">
+    <a href="https://matangaresearch.com" target="_blank" class="header-left" title="Powered by MATANGA">
+      <img src="assets/m1nt-logo.png" alt="m1NT">
+      <div class="header-left-text">
+        <div class="header-left-name">m1NT</div>
+        <div class="header-left-sub">AI compliance agent</div>
+      </div>
+    </a>
+    <div class="header-center">Ask Your Binder</div>
+    <a href="https://matangaresearchllc.sharepoint.com/sites/heritage-valley-smart-binder" target="_blank" class="header-right" title="Open Heritage Valley Foods Smart Binder">
+      <div class="header-right-text">
+        <div class="header-right-name">Heritage Valley Foods</div>
+        <div class="header-right-sub">Smart Binder</div>
+      </div>
+      <img src="assets/heritage-valley-logo.svg" alt="HVF">
+    </a>
   </div>
 </div>
 
